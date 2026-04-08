@@ -278,7 +278,7 @@
     div.className = "ms-msg " + role;
     div.textContent = content;
     messagesEl.appendChild(div);
-    scrollToBottom();
+    div.scrollIntoView({ behavior: "smooth", block: "start" });
     return div;
   }
 
