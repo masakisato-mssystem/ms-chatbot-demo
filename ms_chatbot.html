@@ -7,7 +7,7 @@
 <link href="https://fonts.googleapis.com/css2?family=Noto+Sans+JP:wght@300;400;500;700&display=swap" rel="stylesheet">
 <style>
   :root {
-    --navy: #1a2744;
+    --navy: #3d2b1f;
     --navy-light: #2a3a5c;
     --bg: #f7f5f1;
     --text: #222;
@@ -285,12 +285,12 @@
   function linkify(text) {
     text = text.replace(
       /\[([^\]]+)\]\((https?:\/\/[^\)]+)\)/g,
-      '<a href="$2" target="_blank" rel="noopener noreferrer" style="color:#1a2744;text-decoration:underline;">$1</a>'
+      '<a href="$2" target="_blank" rel="noopener noreferrer" style="color:#3d2b1f;text-decoration:underline;">$1</a>'
     );
     text = text.replace(/\*\*(.+?)\*\*/g, '<strong>$1</strong>');
     text = text.replace(
       /(https?:\/\/[^\s<\u3000\u3001\u3002\uff01\uff09\u300d]+)/g,
-      '<a href="$1" target="_blank" rel="noopener noreferrer" style="color:#1a2744;text-decoration:underline;word-break:break-all;">$1</a>'
+      '<a href="$1" target="_blank" rel="noopener noreferrer" style="color:#3d2b1f;text-decoration:underline;word-break:break-all;">$1</a>'
     );
     return text;
   }
