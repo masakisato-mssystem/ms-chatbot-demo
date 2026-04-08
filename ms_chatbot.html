@@ -283,10 +283,12 @@
   }
 
   function linkify(text) {
-    return text.replace(
-      /(https?:\/\/[^\s\u3000\u3001\u3002\uff01\uff09\u300d]+)/g,
+    text = text.replace(/\*\*(.+?)\*\*/g, '<strong>$1</strong>');
+    text = text.replace(
+      /(https?:\/\/[^\s<\u3000\u3001\u3002\uff01\uff09\u300d]+)/g,
       '<a href="$1" target="_blank" rel="noopener noreferrer" style="color:#1a2744;text-decoration:underline;word-break:break-all;">$1</a>'
     );
+    return text;
   }
 
   function renderMessage(role, content) {
