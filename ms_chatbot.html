@@ -5,6 +5,7 @@
 <meta name="viewport" content="width=device-width, initial-scale=1.0" />
 <title>エムズシステム 音環境アシスタント</title>
 <link href="https://fonts.googleapis.com/css2?family=Noto+Sans+JP:wght@300;400;500;700&display=swap" rel="stylesheet">
+<script src="https://cdn.jsdelivr.net/npm/marked/marked.min.js"></script>
 <style>
   :root {
     --navy: #3d2b1f;
@@ -282,25 +283,29 @@
       .replace(/'/g, "&#39;");
   }
 
-  function linkify(text) {
-    text = escapeHtml(text);
-    text = text.replace(
-      /\[([^\]]+)\]\((https?:\/\/[^\)]+)\)/g,
-      '<a href="$2" target="_blank" rel="noopener noreferrer" style="color:#3d2b1f;text-decoration:underline;">$1</a>'
-    );
-    text = text.replace(/\*\*(.+?)\*\*/g, '<strong>$1</strong>');
-    text = text.replace(
-      /(https?:\/\/[^\s<\u3000\u3001\u3002\uff01\uff09\u300d]+)/g,
-      '<a href="$1" target="_blank" rel="noopener noreferrer" style="color:#3d2b1f;text-decoration:underline;word-break:break-all;">$1</a>'
-    );
-    return text;
-  }
-
   function renderMessage(role, content) {
     const div = document.createElement("div");
     div.className = "ms-msg " + role;
     if (role === "assistant") {
-      div.innerHTML = linkify(content).replace(/\n/g, "<br>");
+      // AIがHTMLタグを出力した場合、Markdownリンク形式に変換してから処理
+      let cleaned = content;
+      // <a href="URL" ...>テキスト</a> → [テキスト](URL) に変換
+      cleaned = cleaned.replace(
+        /<a\s+href="(https?:\/\/[^"]+)"[^>]*>([\s\S]*?)<\/a>/gi,
+        '[$2]($1)'
+      );
+      // 残ったHTMLタグを除去
+      cleaned = cleaned.replace(/<[^>]+>/g, '');
+      // markedでMarkdown→HTMLに変換
+      const html = marked.parse(cleaned, { breaks: true, gfm: true });
+      div.innerHTML = html;
+      div.querySelectorAll("a").forEach((a) => {
+        a.setAttribute("target", "_blank");
+        a.setAttribute("rel", "noopener noreferrer");
+        a.style.color = "#3d2b1f";
+        a.style.textDecoration = "underline";
+        a.style.wordBreak = "break-all";
+      });
     } else {
       div.textContent = content;
     }
