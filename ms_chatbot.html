@@ -278,7 +278,6 @@
     div.className = "ms-msg " + role;
     div.textContent = content;
     messagesEl.appendChild(div);
-    div.scrollIntoView({ behavior: "smooth", block: "start" });
     return div;
   }
 
@@ -314,7 +313,8 @@
     sendBtn.disabled = true;
 
     removeExistingCta();
-    renderMessage("user", text);
+    const userMsgEl = renderMessage("user", text);
+    userMsgEl.scrollIntoView({ behavior: "smooth", block: "start" });
     input.value = "";
     input.style.height = "auto";
 
