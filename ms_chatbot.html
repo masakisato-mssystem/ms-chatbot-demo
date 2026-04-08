@@ -266,7 +266,7 @@
     "こんにちは。エムズシステムのAIアシスタントです。\n空間の音環境について、お気軽にご質問ください。";
 
   function scrollToBottom() {
-    messagesEl.scrollTop = messagesEl.scrollHeight;
+    // no-op: 新しいユーザーメッセージに対しては sendMessage 内で scrollIntoView を使用
   }
 
   function removeExistingCta() {
